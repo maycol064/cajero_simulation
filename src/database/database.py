@@ -36,6 +36,8 @@ class Database():
 
         return result
 
+    # Igual siento que puede usarse esta función para eliminar
+    # por lo que consideré inncecesario añadir un nuevo método
     def insert_or_update(self, query, data_query):
         cnx = mysql.connector.connect(**self.__configuration)
         cursor = cnx.cursor()
