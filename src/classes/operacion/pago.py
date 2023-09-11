@@ -1,4 +1,4 @@
-from ..operacion import Operacion
+from .operacion import Operacion
 
 
 class Pago(Operacion):
@@ -8,6 +8,6 @@ class Pago(Operacion):
         self.__destino = destino
         self.__forma_pago = forma_pago
 
-    def realizar_operacion():
+    def realizar_operacion(self):
         print("Realizando operacion desde Pago...\n")
         # TODO: Realizar movimiento en la BD
