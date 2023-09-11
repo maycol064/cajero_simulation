@@ -18,14 +18,14 @@ class Database():
             'database': self.__conection_values['DB_DATABASE'],
         }
 
-    def query(self, query, params=None):
+    def select(self, query, data_query=None):
         cnx = mysql.connector.connect(**self.__configuration)
         cursor = cnx.cursor()
 
-        if params == None:
+        if data_query == None:
             cursor.execute(query)
         else:
-            cursor.execute(query, params)
+            cursor.execute(query, data_query)
 
         result = []
         for data_result in cursor:
@@ -36,12 +36,34 @@ class Database():
 
         return result
 
+    def insert_or_update(self, query, data_query):
+        cnx = mysql.connector.connect(**self.__configuration)
+        cursor = cnx.cursor()
+
+        cursor.execute(query, data_query)
+        cnx.commit()
+
+        cursor.close()
+        cnx.close()
+
 
 database = Database()
 
 # devuelve una lista vacía
-print(database.query("select * from banco where nombre = %s", ('Santaner',)))
+print(database.select("SELECT * FROM banco WHERE nombre = %s", ('Santaner',)))
 
 
 # Devuelve todos los bancos
-print(database.query("select * from banco"))
+print(database.select("SELECT * FROM banco"))
+
+# Inserta un nuevo banco
+database.insert_or_update(
+    "INSERT INTO banco VALUES(%s, %s)", ("31", "Banco del Bienestar")
+)
+print(database.select("SELECT * FROM banco"))
+
+# Actualizar un banco
+database.insert_or_update(
+    "UPDATE banco SET nombre = %s WHERE id_banco = %s", ("Bienestar", "31")
+)
+print(database.select("SELECT * FROM banco"))
