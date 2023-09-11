@@ -11,7 +11,3 @@ class Cuenta:
 
     def tiene_saldo_disponible(self, monto_operacion):
         return self.__saldo >= monto_operacion
-
-    def ingresar_tarjeta(self, id):
-        print("Ingresando tarjeta...\n")
-        # TODO: Validar si existe la cuenta en la BD
